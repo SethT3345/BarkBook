@@ -1,13 +1,48 @@
 import './tailwind.css'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login(){
+    const navigate = useNavigate(); 
+    const [numUsers, setNumUsers] = useState(0)
+
+    useEffect(() => {
+        const storedNumUsers = localStorage.getItem("numUsers") || 0;
+        setNumUsers(parseInt(storedNumUsers));
+    }, []);
+
+    function HandleLogin(e){
+        e.preventDefault();
+        
+        const enteredEmail = document.getElementById("email").value;
+        const enteredPassword = document.getElementById("password").value;
+        let loginSuccessful = false; 
+        
+        for (let i = 1; i <= numUsers; i++){
+            const storedEmail = localStorage.getItem(`User${i}Email`);
+            const storedPassword = localStorage.getItem(`User${i}Password`);
+            
+            if (enteredEmail === storedEmail && enteredPassword === storedPassword) {
+                loginSuccessful = true;
+                break;
+            }
+        }
+        
+        if (loginSuccessful) {
+            alert("Login successful!");
+            navigate("/Home")
+        } else {
+            alert("Invalid email or password. Please try again.");
+        }
+    }
+
     return(
        <>
        <div className="bg-amber-500 min-h-screen flex items-center justify-center">
             <div className="w-96 h-auto bg-white bg-opacity-90 flex flex-col items-center justify-center p-8 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
                 
-                <form className="w-full max-w-sm">
+                <form className="w-full max-w-sm" onSubmit={HandleLogin}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
