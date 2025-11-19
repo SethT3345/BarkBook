@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Home(){
   const [dogUrl, setDogUrl] = useState("");
@@ -6,6 +7,7 @@ export default function Home(){
   const [dropDown, setDropDown] = useState(true);
   const [Liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
+  const navigate = useNavigate();
 
   const fetchDog = async () => {
     try {
@@ -33,26 +35,35 @@ export default function Home(){
 
   function addLike(){
     if(!Liked){
-    
-      let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
-      
-    
-      likedPosts.push(dogUrl);
-      
-    
-      localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
-      setLiked(true);
+  
+        let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+        likedPosts.push(dogUrl);
+        localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+        
+     
+        const newNumLikes = numLikes + 1;
+        setNumLikes(newNumLikes);
+        localStorage.setItem('numLikes', newNumLikes.toString());
+        
+        setLiked(true);
     }
     else{
-    
-      let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
-      
-    
-      likedPosts = likedPosts.filter(url => url !== dogUrl);
+       
+        let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+        likedPosts = likedPosts.filter(url => url !== dogUrl);
+        localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+        
 
-      localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
-      setLiked(false);
+        const newNumLikes = numLikes - 1;
+        setNumLikes(newNumLikes);
+        localStorage.setItem('numLikes', newNumLikes.toString());
+        
+        setLiked(false);
     }
+  }
+
+  function goToLiked(){
+    navigate("/Liked");
   }
 
   return(
@@ -89,7 +100,7 @@ export default function Home(){
                             <svg className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
-                            <h1 className="text-black text-lg font-bold whitespace-nowrap">Liked Posts</h1>
+                            <h1 className="text-black text-lg font-bold whitespace-nowrap" onClick={goToLiked}>Liked Posts</h1>
                         </div>
                     )}
                 </div>
@@ -118,7 +129,7 @@ export default function Home(){
                 {/* Like Button */}
                 <button 
                   onClick={addLike}
-                  className={`flex items-center justify-center w-12 h-12 rounded-full border border-black hover:bg-gray-100 transition-colors ${
+                  className={`flex items-center justify-center w-12 h-12 rounded-full border border-black ${
                     Liked ? 'bg-red-500 text-white' : 'bg-white text-black'
                   }`}
                 >
