@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 export default function Home(){
   const [dogUrl, setDogUrl] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dropDown, setDropDown] = useState(true); // Changed to true so menu is hidden by default
 
   const fetchDog = async () => {
     try {
@@ -23,6 +24,10 @@ export default function Home(){
     fetchDog();
   }, []);
 
+  function toggleDropDown(){
+    setDropDown(!dropDown);
+  }
+
   return(
     <div className="bg-amber-500 min-h-screen flex items-center justify-center">
         <div className="min-h-screen w-[50vw] min-w-96 relative">
@@ -34,9 +39,9 @@ export default function Home(){
                 />
             </div>
             <div className="flex justify-center pt-8">
-                <h1 className="text-white text-3xl font-bold">BarkBook</h1>
+                <h1 className="text-white text-3xl font-bold font-mono">BarkBook</h1>
             </div>
-            <div className="absolute top-4 left-4 cursor-pointer">
+            <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                 <svg 
                     className="w-10 h-10 text-white" 
                     fill="none" 
@@ -51,6 +56,16 @@ export default function Home(){
                         d="M4 6h16M4 12h16M4 18h16" 
                     />
                 </svg>
+                <div id="MenuHolder">
+                    {!dropDown && (
+                        <div id="dropDownMenu" className="w-50 h-10 bg-white border border-black mt-1 flex items-center gap-2 px-2">
+                            <svg className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            <h1 className="text-black text-lg font-bold whitespace-nowrap">Liked Posts</h1>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="flex justify-center mt-16">
