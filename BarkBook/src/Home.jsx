@@ -3,7 +3,9 @@ import { useState, useEffect } from "react"
 export default function Home(){
   const [dogUrl, setDogUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [dropDown, setDropDown] = useState(true); // Changed to true so menu is hidden by default
+  const [dropDown, setDropDown] = useState(true);
+  const [Liked, setLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
 
   const fetchDog = async () => {
     try {
@@ -13,6 +15,7 @@ export default function Home(){
       const data = await res.json();
 
       setDogUrl(data.message);
+      setLiked(false); // Reset liked state for new image
     } catch (err) {
       console.error("Failed to fetch dog image:", err);
     } finally {
@@ -26,6 +29,30 @@ export default function Home(){
 
   function toggleDropDown(){
     setDropDown(!dropDown);
+  }
+
+  function addLike(){
+    if(!Liked){
+    
+      let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+      
+    
+      likedPosts.push(dogUrl);
+      
+    
+      localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+      setLiked(true);
+    }
+    else{
+    
+      let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+      
+    
+      likedPosts = likedPosts.filter(url => url !== dogUrl);
+
+      localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+      setLiked(false);
+    }
   }
 
   return(
@@ -89,10 +116,15 @@ export default function Home(){
                 </button>
 
                 {/* Like Button */}
-                <button className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-black hover:bg-gray-100 transition-colors">
-                    <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
+                <button 
+                  onClick={addLike}
+                  className={`flex items-center justify-center w-12 h-12 rounded-full border border-black hover:bg-gray-100 transition-colors ${
+                    Liked ? 'bg-red-500 text-white' : 'bg-white text-black'
+                  }`}
+                >
+                  <svg className="w-6 h-6" fill={Liked ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
                 </button>
 
                 {/* Next Button */}
