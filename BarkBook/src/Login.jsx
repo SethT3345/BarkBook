@@ -31,6 +31,9 @@ export default function Login(){
         if (loginSuccessful) {
             alert("Login successful!");
             navigate("/Home")
+
+            
+
         } else {
             alert("Invalid email or password. Please try again.");
         }
