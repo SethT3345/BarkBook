@@ -5,9 +5,12 @@ export default function Home(){
   const [dogUrl, setDogUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(true);
+  const [wtaComment, setWtaComment] = useState(false);
   const [Liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
   const navigate = useNavigate();
+  
+
 
   const fetchDog = async () => {
     try {
@@ -37,6 +40,10 @@ export default function Home(){
 
   function toggleDropDown(){
     setDropDown(!dropDown);
+  }
+
+  function toggleComment(){
+    setWtaComment(!wtaComment);
   }
 
   function addLike(){
@@ -126,7 +133,7 @@ export default function Home(){
             {/* Buttons section */}
             <div className="flex justify-center items-center mt-4 gap-8">
                 {/* Comment Button */}
-                <button className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-black hover:bg-gray-100 transition-colors">
+                <button onClick={toggleComment} className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-black hover:bg-gray-100 transition-colors">
                     <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
@@ -156,7 +163,8 @@ export default function Home(){
                 </button>
             </div>
 
-
+            <div id="commentHolder">
+                {wtaComment && (
             <div className="flex flex-col items-center mt-4 w-[80%] mx-auto max-w-[500px]">
     <form className="w-full">
         <input 
@@ -165,10 +173,12 @@ export default function Home(){
             className="w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-amber-600"
         />
     </form>
-    <button className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3">
+    <button className="mb-4 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3">
         Submit Comment
     </button>
-</div>
+        </div>
+                )}
+        </div>
             
         </div>
     </div>
