@@ -9,7 +9,27 @@ export default function Home(){
   const [Liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
   const navigate = useNavigate();
-  
+  const [commentedPosts, setCommentedPosts] = useState([]);
+  const [userComment, setUserComment] = useState("");
+  const [allComments, setAllComments] = useState([]);
+
+  function addComment(commentText){
+    if(!commentText || commentText.trim() === "") return;
+    
+    let comments = JSON.parse(localStorage.getItem("AllComments") || "[]");
+    const newComment = {
+        text: commentText,
+        dogUrl: dogUrl,
+    };
+    comments.push(newComment);
+    setAllComments(comments);
+    localStorage.setItem('AllComments', JSON.stringify(comments));
+    
+    setWtaComment(false);
+
+    alert("Comment Added!")
+
+  }
 
 
   const fetchDog = async () => {
@@ -20,7 +40,6 @@ export default function Home(){
       const data = await res.json();
 
       setDogUrl(data.message);
-      setLiked(false); // Reset liked state for new image
     } catch (err) {
       console.error("Failed to fetch dog image:", err);
     } finally {
@@ -187,17 +206,29 @@ export default function Home(){
             <div id="commentHolder">
                 {wtaComment && (
             <div className="flex flex-col items-center mt-4 w-[80%] mx-auto max-w-[500px]">
-    <form className="w-full">
+    <form className="w-full" onSubmit={(e) => {
+        e.preventDefault();
+        addComment(userComment);
+        setUserComment(""); // Clear input after submit
+    }}>
         <input 
             type="text" 
+            value={userComment}
+            onChange={(e) => setUserComment(e.target.value)}
             placeholder="Comment Here..." 
             className="w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-amber-600"
         />
     </form>
-    <button className="mb-4 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3">
+    <button 
+        onClick={() => {
+            addComment(userComment);
+            setUserComment("");
+        }}
+        className="mb-4 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3"
+    >
         Submit Comment
     </button>
-        </div>
+</div>
                 )}
         </div>
             

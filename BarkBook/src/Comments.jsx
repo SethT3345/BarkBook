@@ -19,10 +19,6 @@ function goToHome(){
     navigate("/Liked");
   }
 
-    function goToComments(){
-        navigate("/Comments")
-    }
-
   return(
     <div className="bg-amber-600 min-h-screen flex items-center justify-center">
         <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
