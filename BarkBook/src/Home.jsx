@@ -103,7 +103,7 @@ export default function Home(){
                 <div id="MenuHolder">
                     {!dropDown && (
                         <div id="dropDownMenu" className="w-50 h-10 bg-white border border-black mt-1 flex items-center gap-2 px-2">
-                            <svg className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg onClick={goToLiked} className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
                             <h1 className="text-black text-lg font-bold whitespace-nowrap" onClick={goToLiked}>Liked Posts</h1>
@@ -155,8 +155,23 @@ export default function Home(){
                     </svg>
                 </button>
             </div>
+
+
+            <div className="flex flex-col items-center mt-4 w-[80%] mx-auto max-w-[500px]">
+    <form className="w-full">
+        <input 
+            type="text" 
+            placeholder="Comment Here..." 
+            className="w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-amber-600"
+        />
+    </form>
+    <button className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3">
+        Submit Comment
+    </button>
+</div>
             
         </div>
     </div>
   )
 }
+
