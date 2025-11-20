@@ -4,6 +4,7 @@ import Login from './Login'
 import Signup from './Signup'
 import Home from './Home'
 import Liked from './Liked'
+import Comments from './Comments'
 
 
 function App(){
@@ -15,6 +16,7 @@ function App(){
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Liked" element={<Liked />} />
+        <Route path="/Comments" element={<Comments />} />
       </Routes>
   )
 }
