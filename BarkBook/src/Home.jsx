@@ -27,6 +27,12 @@ export default function Home(){
 
   useEffect(() => {
     fetchDog();
+    
+    const storedNumLikes = localStorage.getItem('numLikes');
+    if (storedNumLikes) {  
+        setNumLikes(parseInt(storedNumLikes));
+    }
+
   }, []);
 
   function toggleDropDown(){
@@ -35,26 +41,26 @@ export default function Home(){
 
   function addLike(){
     if(!Liked){
-  
         let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
         likedPosts.push(dogUrl);
         localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
         
-     
-        const newNumLikes = numLikes + 1;
+        // Get current stored value or default to 0 if cleared
+        const currentStoredLikes = parseInt(localStorage.getItem('numLikes') || '0');
+        const newNumLikes = currentStoredLikes + 1;
         setNumLikes(newNumLikes);
         localStorage.setItem('numLikes', newNumLikes.toString());
         
         setLiked(true);
     }
     else{
-       
         let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
         likedPosts = likedPosts.filter(url => url !== dogUrl);
         localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
         
-
-        const newNumLikes = numLikes - 1;
+        // Get current stored value or default to 0 if cleared
+        const currentStoredLikes = parseInt(localStorage.getItem('numLikes') || '0');
+        const newNumLikes = Math.max(0, currentStoredLikes - 1); // Prevent negative numbers
         setNumLikes(newNumLikes);
         localStorage.setItem('numLikes', newNumLikes.toString());
         
@@ -67,8 +73,8 @@ export default function Home(){
   }
 
   return(
-    <div className="bg-amber-500 min-h-screen flex items-center justify-center">
-        <div className="min-h-screen w-[50vw] min-w-96 relative">
+    <div className="bg-amber-600 min-h-screen flex items-center justify-center">
+        <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
             <div className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
