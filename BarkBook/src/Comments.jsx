@@ -5,13 +5,26 @@ export default function Comments(){
   const [dropDown, setDropDown] = useState(true);
   const [allComments, setAllComments] = useState([]);
   const [numComments, setNumComments] = useState(0);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const navigate = useNavigate();
 
+  
+  const getUserKey = (key) => `${key}_user_${currentUserId}`;
+
   useEffect(() => {
-    const storedComments = JSON.parse(localStorage.getItem("AllComments") || "[]");
+    
+    const userId = localStorage.getItem("currentUserId");
+    if (!userId) {
+      
+      navigate("/Login");
+      return;
+    }
+    setCurrentUserId(userId);
+  
+    const storedComments = JSON.parse(localStorage.getItem(`AllComments_user_${userId}`) || "[]");
     setAllComments(storedComments);
     
-    const storedNumComments = localStorage.getItem("numComments");
+    const storedNumComments = localStorage.getItem(`numComments_user_${userId}`);
     if (storedNumComments) {
       setNumComments(parseInt(storedNumComments));
     }
@@ -30,17 +43,20 @@ export default function Comments(){
   }
 
   function removeComment(index) {
+    if (!currentUserId) return;
+    
     
     const updatedComments = allComments.filter((_, i) => i !== index);
     setAllComments(updatedComments);
     
-  
-    localStorage.setItem('AllComments', JSON.stringify(updatedComments));
+ 
+    localStorage.setItem(getUserKey('AllComments'), JSON.stringify(updatedComments));
     
-    const currentComments = parseInt(localStorage.getItem('numComments') || '0');
+
+    const currentComments = parseInt(localStorage.getItem(getUserKey('numComments')) || '0');
     const newNumComments = Math.max(0, currentComments - 1);
     setNumComments(newNumComments);
-    localStorage.setItem('numComments', newNumComments.toString());
+    localStorage.setItem(getUserKey('numComments'), newNumComments.toString());
   }
 
   return(

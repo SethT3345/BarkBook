@@ -8,37 +8,54 @@ export default function Home(){
   const [wtaComment, setWtaComment] = useState(false);
   const [Liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
-  const [numComments, setNumComments] = useState(0); // Add this state
+  const [numComments, setNumComments] = useState(0);
   const [commentLikes, setCommentLikes] = useState(0);
   const navigate = useNavigate();
   const [commentedPosts, setCommentedPosts] = useState([]);
   const [userComment, setUserComment] = useState("");
   const [allComments, setAllComments] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  
+  useEffect(() => {
+    const userId = localStorage.getItem("currentUserId");
+    if (!userId) {
+      
+      navigate("/Login");
+      return;
+    }
+    setCurrentUserId(userId);
+  }, []);
+
+  
+  const getUserKey = (key) => `${key}_user_${currentUserId}`;
 
   function addComment(commentText){
-    if(!commentText || commentText.trim() === "") return;
+    if(!commentText || commentText.trim() === "" || !currentUserId) return;
     
-    let comments = JSON.parse(localStorage.getItem("AllComments") || "[]");
+    let comments = JSON.parse(localStorage.getItem(getUserKey("AllComments")) || "[]");
     const newComment = {
         text: commentText,
         dogUrl: dogUrl,
+        userId: currentUserId
     };
     comments.push(newComment);
     setAllComments(comments);
-    localStorage.setItem('AllComments', JSON.stringify(comments));
+    localStorage.setItem(getUserKey("AllComments"), JSON.stringify(comments));
     
-    // Increment numComments
-    const currentStoredComments = parseInt(localStorage.getItem('numComments') || '0');
+
+    const currentStoredComments = parseInt(localStorage.getItem(getUserKey("numComments")) || '0');
     const newNumComments = currentStoredComments + 1;
     setNumComments(newNumComments);
-    localStorage.setItem('numComments', newNumComments.toString());
+    localStorage.setItem(getUserKey("numComments"), newNumComments.toString());
     
     setWtaComment(false);
     alert("Comment Added!")
   }
 
-
   const fetchDog = async () => {
+    if (!currentUserId) return;
+    
     try {
       setLoading(true);
 
@@ -46,8 +63,8 @@ export default function Home(){
       const data = await res.json();
 
       setDogUrl(data.message);
-      
-      const likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+  
+      const likedPosts = JSON.parse(localStorage.getItem(getUserKey("LikedPosts")) || "[]");
       setLiked(likedPosts.includes(data.message));
       
     } catch (err) {
@@ -58,19 +75,24 @@ export default function Home(){
   };
 
   useEffect(() => {
-    fetchDog();
+    if (currentUserId) {
+      fetchDog();
+      
     
-    const storedNumLikes = localStorage.getItem('numLikes');
-    if (storedNumLikes) {  
-        setNumLikes(parseInt(storedNumLikes));
-    }
+      const storedNumLikes = localStorage.getItem(getUserKey('numLikes'));
+      if (storedNumLikes) {  
+          setNumLikes(parseInt(storedNumLikes));
+      }
 
-    const storedNumComments = localStorage.getItem('numComments');
-    if (storedNumComments) {  
-        setNumComments(parseInt(storedNumComments));
-    }
+      const storedNumComments = localStorage.getItem(getUserKey('numComments'));
+      if (storedNumComments) {  
+          setNumComments(parseInt(storedNumComments));
+      }
 
-  }, []);
+      const storedComments = JSON.parse(localStorage.getItem(getUserKey("AllComments")) || "[]");
+      setAllComments(storedComments);
+    }
+  }, [currentUserId]);
 
   function toggleDropDown(){
     setDropDown(!dropDown);
@@ -81,29 +103,29 @@ export default function Home(){
   }
 
   function addLike(){
+    if (!currentUserId) return;
+    
     if(!Liked){
-        let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+        let likedPosts = JSON.parse(localStorage.getItem(getUserKey("LikedPosts")) || "[]");
         likedPosts.push(dogUrl);
-        localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+        localStorage.setItem(getUserKey("LikedPosts"), JSON.stringify(likedPosts));
         
-        // Get current stored value or default to 0 if cleared
-        const currentStoredLikes = parseInt(localStorage.getItem('numLikes') || '0');
+        const currentStoredLikes = parseInt(localStorage.getItem(getUserKey('numLikes')) || '0');
         const newNumLikes = currentStoredLikes + 1;
         setNumLikes(newNumLikes);
-        localStorage.setItem('numLikes', newNumLikes.toString());
+        localStorage.setItem(getUserKey('numLikes'), newNumLikes.toString());
         
         setLiked(true);
     }
     else{
-        let likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+        let likedPosts = JSON.parse(localStorage.getItem(getUserKey("LikedPosts")) || "[]");
         likedPosts = likedPosts.filter(url => url !== dogUrl);
-        localStorage.setItem('LikedPosts', JSON.stringify(likedPosts));
+        localStorage.setItem(getUserKey("LikedPosts"), JSON.stringify(likedPosts));
         
-        // Get current stored value or default to 0 if cleared
-        const currentStoredLikes = parseInt(localStorage.getItem('numLikes') || '0');
-        const newNumLikes = Math.max(0, currentStoredLikes - 1); // Prevent negative numbers
+        const currentStoredLikes = parseInt(localStorage.getItem(getUserKey('numLikes')) || '0');
+        const newNumLikes = Math.max(0, currentStoredLikes - 1);
         setNumLikes(newNumLikes);
-        localStorage.setItem('numLikes', newNumLikes.toString());
+        localStorage.setItem(getUserKey('numLikes'), newNumLikes.toString());
         
         setLiked(false);
     }
@@ -113,9 +135,9 @@ export default function Home(){
     navigate("/Liked");
   }
 
-    function goToComments(){
-        navigate("/Comments")
-    }
+  function goToComments(){
+    navigate("/Comments")
+  }
 
   return(
     <div className="bg-amber-600 min-h-screen flex items-center justify-center">
@@ -224,7 +246,7 @@ export default function Home(){
     <form className="w-full" onSubmit={(e) => {
         e.preventDefault();
         addComment(userComment);
-        setUserComment(""); // Clear input after submit
+        setUserComment(""); 
     }}>
         <input 
             type="text" 

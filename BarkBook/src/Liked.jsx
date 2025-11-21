@@ -4,7 +4,26 @@ import { useNavigate } from "react-router-dom";
 export default function Liked(){
     const [dropDown, setDropDown] = useState(true);
     const [likedPosts, setLikedPosts] = useState([]);
+    const [currentUserId, setCurrentUserId] = useState(null);
     const navigate = useNavigate();
+
+    
+    const getUserKey = (key) => `${key}_user_${currentUserId}`;
+
+    useEffect(() => {
+       
+        const userId = localStorage.getItem("currentUserId");
+        if (!userId) {
+      
+            navigate("/Login");
+            return;
+        }
+        setCurrentUserId(userId);
+        
+
+        const storedPosts = JSON.parse(localStorage.getItem(`LikedPosts_user_${userId}`) || "[]");
+        setLikedPosts(storedPosts);
+    }, []);
 
     function toggleDropDown(){
         setDropDown(!dropDown);
@@ -19,24 +38,20 @@ export default function Liked(){
     }
 
     function removeLikedPost(imageUrl){
+        if (!currentUserId) return;
 
+        
         const updatedPosts = likedPosts.filter(url => url !== imageUrl);
         setLikedPosts(updatedPosts);
         
-
-        localStorage.setItem('LikedPosts', JSON.stringify(updatedPosts));
+       
+        localStorage.setItem(getUserKey('LikedPosts'), JSON.stringify(updatedPosts));
         
-  
-        const currentLikes = parseInt(localStorage.getItem('numLikes') || '0');
+      
+        const currentLikes = parseInt(localStorage.getItem(getUserKey('numLikes')) || '0');
         const newLikes = Math.max(0, currentLikes - 1);
-        localStorage.setItem('numLikes', newLikes.toString());
+        localStorage.setItem(getUserKey('numLikes'), newLikes.toString());
     }
-
-    useEffect(() => {
-
-        const storedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
-        setLikedPosts(storedPosts);
-    }, []);
 
     return(
         <div className="bg-amber-600 min-h-screen flex items-center justify-center">
