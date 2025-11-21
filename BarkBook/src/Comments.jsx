@@ -1,31 +1,46 @@
 import { useState, useEffect } from "react"
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Comments(){
   const [dropDown, setDropDown] = useState(true);
-  const [likedComments, setLikedComments] = useState([]);
+  const [allComments, setAllComments] = useState([]);
   const [numComments, setNumComments] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedComments = JSON.parse(localStorage.getItem("AllComments") || "[]");
-    setLikedComments(storedComments);
-    const storedNumComments = JSON.parse(localStorage.getItem("numComments"))
-    setNumComments(storedNumComments)
+    setAllComments(storedComments);
+    
+    const storedNumComments = localStorage.getItem("numComments");
+    if (storedNumComments) {
+      setNumComments(parseInt(storedNumComments));
+    }
   }, []);
 
   function toggleDropDown(){
     setDropDown(!dropDown);
   }
 
-
-  
-function goToHome(){
-        navigate("/Home");
-    }
+  function goToHome(){
+    navigate("/Home");
+  }
 
   function goToLiked(){
     navigate("/Liked");
+  }
+
+  function removeComment(index) {
+    
+    const updatedComments = allComments.filter((_, i) => i !== index);
+    setAllComments(updatedComments);
+    
+  
+    localStorage.setItem('AllComments', JSON.stringify(updatedComments));
+    
+    const currentComments = parseInt(localStorage.getItem('numComments') || '0');
+    const newNumComments = Math.max(0, currentComments - 1);
+    setNumComments(newNumComments);
+    localStorage.setItem('numComments', newNumComments.toString());
   }
 
   return(
@@ -80,22 +95,33 @@ function goToHome(){
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center mt-16">
-                <div 
-                    className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
-                >
-                
-                </div>
+            <div className="flex flex-col items-center mt-16 gap-8 pb-8">
+                {allComments.length === 0 ? (
+                    <p className="text-white text-xl">No commented posts yet!</p>
+                ) : (
+                    allComments.map((comment, index) => (
+                        <div key={index} className="flex flex-col items-center">
+                            <div 
+                                className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
+                                style={{
+                                    backgroundImage: `url(${comment.dogUrl})`
+                                }}
+                            >
+                            </div>
 
-                <div className="w-full max-w-[521px] min-w-96 px-4 bg-white py-3 border-2 border-black h-auto text-black placeholder-gray-500 focus:outline-none focus:border-amber-600 flex items-center justify-center">
-                    *Place Comment Here*
-                </div>
+                            <div className="w-full max-w-[521px] min-w-96 px-4 bg-white py-3 border-2 border-black h-auto text-black flex items-center justify-center mt-4">
+                                {comment.text}
+                            </div>
 
-                <button 
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full border border-black transition-colors mt-4 text-sm"
-                     >
-                        Remove Comment
-                </button>
+                            <button 
+                                onClick={() => removeComment(index)}
+                                className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full border border-black transition-colors mt-4 text-sm"
+                            >
+                                Remove Comment
+                            </button>
+                        </div>
+                    ))
+                )}
             </div>
             
         </div>

@@ -1,20 +1,27 @@
 import './tailwind.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Signup(){
     const navigate = useNavigate(); 
 
-    const [newUserEmail, setnewUserEmail] = useState("")
-    const [newUserPassword, setnewUserPassword] = useState("")
-    const [numUsers, setnumUsers] = useState(0)
+    const [userAccounts, setUserAccounts] = useState([]);
+    const [numUsers, setNumUsers] = useState(0);
+
+    useEffect(() => {
+        
+        const storedNumUsers = parseInt(localStorage.getItem("numUsers") || "0");
+        setNumUsers(storedNumUsers);
+        
+        const storedAccounts = JSON.parse(localStorage.getItem("userAccounts") || "[]");
+        setUserAccounts(storedAccounts);
+    }, []);
 
     function handleNewUser(e){
         e.preventDefault();
         
-
-        const UserEmail = document.getElementById("email").value
-        const UserPassword = document.getElementById("password").value
+        const UserEmail = document.getElementById("email").value;
+        const UserPassword = document.getElementById("password").value;
 
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
@@ -26,16 +33,24 @@ export default function Signup(){
             return;
         } else {
             const newNumUsers = numUsers + 1;
-            setnumUsers(newNumUsers);
-            setnewUserEmail(UserEmail)
-            setnewUserPassword(UserPassword)
+            
+            const newUserAccount = {
+                userId: newNumUsers,
+                userEmail: UserEmail,
+                userPassword: UserPassword
+            };
+            
+            const updatedAccounts = [...userAccounts, newUserAccount];
+            
+           
+            setNumUsers(newNumUsers);
+            setUserAccounts(updatedAccounts);
 
-            localStorage.setItem("numUsers", newNumUsers);
-            localStorage.setItem(`User${newNumUsers}Email`, UserEmail);
-            localStorage.setItem(`User${newNumUsers}Password`, UserPassword);
+           
+            localStorage.setItem("numUsers", newNumUsers.toString());
+            localStorage.setItem("userAccounts", JSON.stringify(updatedAccounts));
 
             alert("Account Created! Please now login!");
-
             navigate("/Login");
         }
     }

@@ -4,11 +4,15 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Login(){
     const navigate = useNavigate(); 
-    const [numUsers, setNumUsers] = useState(0)
+    const [numUsers, setNumUsers] = useState(0);
+    const [userAccounts, setUserAccounts] = useState([]);
 
     useEffect(() => {
         const storedNumUsers = localStorage.getItem("numUsers") || 0;
         setNumUsers(parseInt(storedNumUsers));
+        
+        const storedAccounts = JSON.parse(localStorage.getItem("userAccounts") || "[]");
+        setUserAccounts(storedAccounts);
     }, []);
 
     function HandleLogin(e){
@@ -18,11 +22,9 @@ export default function Login(){
         const enteredPassword = document.getElementById("password").value;
         let loginSuccessful = false; 
         
-        for (let i = 1; i <= numUsers; i++){
-            const storedEmail = localStorage.getItem(`User${i}Email`);
-            const storedPassword = localStorage.getItem(`User${i}Password`);
-            
-            if (enteredEmail === storedEmail && enteredPassword === storedPassword) {
+        
+        for (const account of userAccounts) {
+            if (enteredEmail === account.userEmail && enteredPassword === account.userPassword) {
                 loginSuccessful = true;
                 break;
             }
@@ -30,10 +32,7 @@ export default function Login(){
         
         if (loginSuccessful) {
             alert("Login successful!");
-            navigate("/Home")
-
-            
-
+            navigate("/Home");
         } else {
             alert("Invalid email or password. Please try again.");
         }
@@ -76,6 +75,8 @@ export default function Login(){
                     >
                         Sign In
                     </button>
+
+                    
                 </form>
 
             </div>
