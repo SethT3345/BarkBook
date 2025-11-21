@@ -1,11 +1,12 @@
 import './tailwind.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Login(){
     const navigate = useNavigate(); 
     const [numUsers, setNumUsers] = useState(0);
     const [userAccounts, setUserAccounts] = useState([]);
+    const [currentUserId, setCurrentUserId] = useState();
 
     useEffect(() => {
         const storedNumUsers = localStorage.getItem("numUsers") || 0;
@@ -26,6 +27,9 @@ export default function Login(){
         for (const account of userAccounts) {
             if (enteredEmail === account.userEmail && enteredPassword === account.userPassword) {
                 loginSuccessful = true;
+                
+                localStorage.setItem("currentUserId", account.userId);
+                setCurrentUserId(account.userId); 
                 break;
             }
         }
