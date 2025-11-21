@@ -3,9 +3,18 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Comments(){
   const [dropDown, setDropDown] = useState(true);
-    const navigate = useNavigate();
-  
-    function toggleDropDown(){
+  const [likedComments, setLikedComments] = useState([]);
+  const [numComments, setNumComments] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedComments = JSON.parse(localStorage.getItem("AllComments") || "[]");
+    setLikedComments(storedComments);
+    const storedNumComments = JSON.parse(localStorage.getItem("numComments"))
+    setNumComments(storedNumComments)
+  }, []);
+
+  function toggleDropDown(){
     setDropDown(!dropDown);
   }
 
@@ -30,7 +39,7 @@ function goToHome(){
                 />
             </div>
             <div className="flex justify-center pt-8">
-                <h1 className="text-white text-3xl font-bold font-mono">BarkBook</h1>
+                <h1 className="text-white text-xl font-bold font-mono">Commented Posts</h1>
             </div>
             <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                 <svg 
@@ -70,9 +79,32 @@ function goToHome(){
                     )}
                 </div>
             </div>
+
+            <div className="flex flex-col items-center justify-center mt-16">
+                <div 
+                    className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
+                >
+                
+                </div>
+
+                <div className="w-full max-w-[521px] min-w-96 px-4 bg-white py-3 border-2 border-black h-auto text-black placeholder-gray-500 focus:outline-none focus:border-amber-600 flex items-center justify-center">
+                    *Place Comment Here*
+                </div>
+
+                <button 
+                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full border border-black transition-colors mt-4 text-sm"
+                     >
+                        Remove Comment
+                </button>
+            </div>
             
         </div>
     </div>
   )
 }
 
+/*
+style={{
+                        backgroundImage: dogUrl ? `url(${dogUrl})` : 'none'
+                    }}
+*/

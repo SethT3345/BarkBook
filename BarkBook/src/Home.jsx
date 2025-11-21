@@ -8,6 +8,8 @@ export default function Home(){
   const [wtaComment, setWtaComment] = useState(false);
   const [Liked, setLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
+  const [numComments, setNumComments] = useState(0); // Add this state
+  const [commentLikes, setCommentLikes] = useState(0);
   const navigate = useNavigate();
   const [commentedPosts, setCommentedPosts] = useState([]);
   const [userComment, setUserComment] = useState("");
@@ -25,10 +27,14 @@ export default function Home(){
     setAllComments(comments);
     localStorage.setItem('AllComments', JSON.stringify(comments));
     
+    // Increment numComments
+    const currentStoredComments = parseInt(localStorage.getItem('numComments') || '0');
+    const newNumComments = currentStoredComments + 1;
+    setNumComments(newNumComments);
+    localStorage.setItem('numComments', newNumComments.toString());
+    
     setWtaComment(false);
-
     alert("Comment Added!")
-
   }
 
 
@@ -40,6 +46,10 @@ export default function Home(){
       const data = await res.json();
 
       setDogUrl(data.message);
+      
+      const likedPosts = JSON.parse(localStorage.getItem("LikedPosts") || "[]");
+      setLiked(likedPosts.includes(data.message));
+      
     } catch (err) {
       console.error("Failed to fetch dog image:", err);
     } finally {
@@ -53,6 +63,11 @@ export default function Home(){
     const storedNumLikes = localStorage.getItem('numLikes');
     if (storedNumLikes) {  
         setNumLikes(parseInt(storedNumLikes));
+    }
+
+    const storedNumComments = localStorage.getItem('numComments');
+    if (storedNumComments) {  
+        setNumComments(parseInt(storedNumComments));
     }
 
   }, []);
