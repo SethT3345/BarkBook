@@ -80,6 +80,16 @@ export default function Login(){
                         Sign In
                     </button>
 
+                    <div className="mt-4 text-center">
+                        <span className="text-gray-600">Don't have an account? </span>
+                        <button 
+                            onClick={() => navigate("/Signup")}
+                            className="text-amber-600 hover:text-amber-700 font-bold underline"
+                            type="button"
+                        >
+                            Sign up here!
+                        </button>
+                    </div>
                     
                 </form>
 
