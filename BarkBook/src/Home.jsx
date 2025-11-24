@@ -171,15 +171,15 @@ export default function Home(){
                     {!dropDown && (
                         <div className="flex flex-col">
                             <div id="dropDownMenu1" className="w-50 h-10 bg-white border border-black mt-1 flex items-center gap-2 px-2">
-                                <div id="div1" className="flex items-center gap-2">
+                                <div onClick={goToLiked} id="div1" className="flex items-center gap-2">
                                     <svg onClick={goToLiked} className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                     </svg>
                                     <h1 className="text-black text-lg font-bold whitespace-nowrap" onClick={goToLiked}>Liked Posts</h1>
                                 </div>
                             </div>
-                            <div id="dropDownMenu2" className="w-50 h-10 bg-white border border-black mt-1 flex items-center gap-2 px-2">
-                                <div id="div2" className="flex items-center gap-2">
+                            <div id="dropDownMenu2" className="w-50 h-10 bg-white border border-black flex items-center gap-2 px-2">
+                                <div id="div2" onClick={goToComments} className="flex items-center gap-2">
                                     <svg onClick={goToComments} className="w-6 h-6 text-black flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                                     </svg>
