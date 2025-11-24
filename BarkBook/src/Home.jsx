@@ -15,6 +15,9 @@ export default function Home(){
   const [userComment, setUserComment] = useState("");
   const [allComments, setAllComments] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+const [pDropDown, setPDropDown] = useState(false); 
+  
+  
 
   
   useEffect(() => {
@@ -94,6 +97,21 @@ export default function Home(){
     }
   }, [currentUserId]);
 
+function logOut(){
+    localStorage.removeItem("currentUserId");
+
+    navigate("/Login")
+  }
+
+  function goToAandS(){
+    navigate("/Account")
+  }
+
+  function togglePDropDown(){
+    setPDropDown(!pDropDown);
+  }
+
+
   function toggleDropDown(){
     setDropDown(!dropDown);
   }
@@ -142,13 +160,25 @@ export default function Home(){
   return(
     <div className="bg-amber-600 min-h-screen flex items-center justify-center">
         <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
-            <div className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+            <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
                     alt="Profile" 
                     className="w-full h-full object-cover"
                 />
             </div>
+
+            {pDropDown && (
+                            <div className="flex flex-col absolute top-20 right-4">
+                                <div onClick={goToAandS} className="bg-white border border-black w-50 h-10 flex items-center gap-2 px-2">
+                                    <h1 className="text-black text-lg font-bold whitespace-nowrap">Account & Settings</h1>
+                                </div>
+                                <div onClick={logOut} className="bg-white border border-black w-50 h-10 flex items-center gap-2 px-2">
+                                    <h1 className="text-red-500 text-lg font-bold whitespace-nowrap">Log Out</h1>
+                                </div>
+                            </div>
+                        )}
+
             <div className="flex justify-center pt-8">
                 <h1 className="text-white text-3xl font-bold font-mono">BarkBook</h1>
             </div>

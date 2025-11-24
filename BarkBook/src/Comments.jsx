@@ -31,6 +31,16 @@ export default function Comments(){
     }
   }, []);
 
+  function logOut(){
+    localStorage.removeItem("currentUserId");
+
+    navigate("/Login")
+  }
+
+  function goToAandS(){
+    navigate("/Account")
+  }
+
   function togglePDropDown(){
     setPDropDown(!pDropDown);
   }
@@ -67,7 +77,7 @@ export default function Comments(){
   return(
     <div className="bg-amber-600 min-h-screen flex items-center justify-center">
         <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
-            <div className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+            <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
                     alt="Profile" 
@@ -75,7 +85,17 @@ export default function Comments(){
                 />
             </div>
 
-            <div className="absolute top-20 right-4 bg-white border border-black w-50 h-10 bg-white border border-black flex items-center gap-2 px-2"></div>
+            {pDropDown && (
+                <div className="flex flex-col absolute top-20 right-4">
+                    <div onClick={goToAandS} className="bg-white border border-black w-50 h-10 flex items-center gap-2 px-2">
+                        <h1 className="text-black text-lg font-bold whitespace-nowrap">Account & Settings</h1>
+                    </div>
+                    <div onClick={logOut} className="bg-white border border-black w-50 h-10 flex items-center gap-2 px-2">
+                        <h1 className="text-red-500 text-lg font-bold whitespace-nowrap">Log Out</h1>
+                    </div>
+                </div>
+            )}
+            
 
             <div className="flex justify-center pt-8">
                 <h1 className="text-white text-xl font-bold font-mono">Commented Posts</h1>
