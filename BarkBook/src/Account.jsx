@@ -22,6 +22,10 @@ function goToHome(){
     navigate("/Home");
 }
 
+function goToInfo(){
+    navigate("/AccountInfo")
+}
+
 return(
     <div className="bg-amber-600 min-h-screen flex items-center justify-center">
         <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
@@ -70,12 +74,13 @@ return(
             </div>
 
             <div className="flex flex-col items-center justify-center mt-50 gap-8 pb-8">
-                <h2 className="text-xl font-bold text-center text-black underline">Account Information</h2>
+                <h2 onClick={goToInfo} className="text-xl font-bold text-center text-black underline">Account Information</h2>
                 <h2 className="text-xl font-bold text-center text-black underline">Themes</h2>
                 <h2 className="text-xl font-bold text-center text-black underline">Time Limit</h2>
                 <h2 className="text-xl font-bold text-center text-black underline">About Us</h2>
             </div>
 
+              
         </div>
     </div>
 )

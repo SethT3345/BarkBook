@@ -6,6 +6,8 @@ import Home from './Home'
 import Liked from './Liked'
 import Comments from './Comments'
 import Account from './Account'
+import AccountInfo from './AccountInfo' 
+
 
 
 function App(){
@@ -19,6 +21,7 @@ function App(){
         <Route path="/Liked" element={<Liked />} />
         <Route path="/Comments" element={<Comments />} />
         <Route path="/Account" element={<Account />} />
+        <Route path="/AccountInfo" element={<AccountInfo />} />
       </Routes>
   )
 }
