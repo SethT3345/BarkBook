@@ -7,7 +7,7 @@ import Liked from './Liked'
 import Comments from './Comments'
 import Account from './Account'
 import AccountInfo from './AccountInfo' 
-
+import Themes from './Themes'
 
 
 function App(){
@@ -22,6 +22,7 @@ function App(){
         <Route path="/Comments" element={<Comments />} />
         <Route path="/Account" element={<Account />} />
         <Route path="/AccountInfo" element={<AccountInfo />} />
+        <Route path="/Themes" element={<Themes />} />
       </Routes>
   )
 }

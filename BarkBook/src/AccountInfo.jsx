@@ -30,13 +30,26 @@ export default function AccountInfo(){
         navigate("/Account")
     }
 
+const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
+
     return(
-        <div className="bg-amber-600 min-h-screen flex items-center justify-center">
-            <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
-                
+        <div className={
+            currentTheme === "German Shepard" ? "bg-stone-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Husky" ? "bg-blue-200 min-h-screen flex items-center justify-center" :
+            currentTheme === "Irish Setter" ? "bg-green-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Shih Tzu" ? "bg-purple-900 min-h-screen flex items-center justify-center" :
+            "bg-stone-800 min-h-screen flex items-center justify-center"
+        }>
+            <div className={
+                currentTheme === "German Shepard" ? "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Husky" ? "bg-white min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Irish Setter" ? "bg-green-100 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Shih Tzu" ? "bg-purple-300 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black"
+            }>  
                 <div onClick={goBack} className="absolute top-4 left-4 cursor-pointer">
                     <svg 
-                        className="w-10 h-10 text-white" 
+                        className="w-10 h-10 text-black" 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24" 
@@ -52,7 +65,7 @@ export default function AccountInfo(){
                 </div>
                 
                 <div className="flex justify-center pt-8">
-                    <h1 className="text-white text-3xl font-bold font-mono">Account Info</h1>
+                    <h1 className="text-black text-3xl font-bold font-mono">Account Info</h1>
                 </div>
 
                 <div className="flex flex-col items-center mt-16 gap-4">

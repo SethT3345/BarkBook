@@ -74,10 +74,24 @@ export default function Comments(){
     localStorage.setItem(getUserKey('numComments'), newNumComments.toString());
   }
 
-  return(
-    <div className="bg-amber-600 min-h-screen flex items-center justify-center">
-        <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
-            <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+  const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
+
+    return(
+        <div className={
+            currentTheme === "German Shepard" ? "bg-stone-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Husky" ? "bg-blue-200 min-h-screen flex items-center justify-center" :
+            currentTheme === "Irish Setter" ? "bg-green-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Shih Tzu" ? "bg-purple-900 min-h-screen flex items-center justify-center" :
+            "bg-stone-800 min-h-screen flex items-center justify-center"
+        }>
+            <div className={
+                currentTheme === "German Shepard" ? "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Husky" ? "bg-white min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Irish Setter" ? "bg-green-100 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                currentTheme === "Shih Tzu" ? "bg-purple-300 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
+                "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black"
+            }>     
+             <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
                     alt="Profile" 
@@ -98,11 +112,11 @@ export default function Comments(){
             
 
             <div className="flex justify-center pt-8">
-                <h1 className="text-white text-xl font-bold font-mono">Commented Posts</h1>
+                <h1 className="text-black text-xl font-bold font-mono">Commented Posts</h1>
             </div>
             <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                 <svg 
-                    className="w-10 h-10 text-white" 
+                    className="w-10 h-10 text-black" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24" 
@@ -141,7 +155,7 @@ export default function Comments(){
 
             <div className="flex flex-col items-center mt-16 gap-8 pb-8">
                 {allComments.length === 0 ? (
-                    <p className="text-white text-xl">No commented posts yet!</p>
+                    <p className="text-black text-xl">No commented posts yet!</p>
                 ) : (
                     allComments.map((comment, index) => (
                         <div key={index} className="flex flex-col items-center">

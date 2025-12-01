@@ -1,0 +1,64 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
+
+export default function Themes(){
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const userId = localStorage.getItem("currentUserId");
+        if (!userId) {
+            navigate("/Login");
+            return;
+        }
+    }, [navigate]);
+
+    function goBack(){
+        navigate("/Account")
+    }
+
+    return(
+        <div className="bg-amber-600 min-h-screen flex items-center justify-center">
+            <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
+                
+                <div onClick={goBack} className="absolute top-4 left-4 cursor-pointer">
+                    <svg 
+                        className="w-10 h-10 text-white" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M15 19l-7-7 7-7" 
+                        />
+                    </svg>
+                </div>
+                
+                <div className="flex justify-center pt-8">
+                    <h1 className="text-white text-3xl font-bold font-mono">Themes</h1>
+                </div>
+
+                <br></br>
+
+                <div className="flex items-center justify-center h-full">
+                    <h1 className="text-white text-2xl font-bold text-center">THIS PAGE IS A WORK IN PROGRESS</h1>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+
+<div className="bg-stone-800 min-h-screen flex items-center justify-center">
+            <div className="bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
+
+<div className="bg-blue-200 min-h-screen flex items-center justify-center">
+            <div className="bg-white min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
+
+            <div className="bg-green-800 min-h-screen flex items-center justify-center">
+            <div className="bg-green-100 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black">
+                
