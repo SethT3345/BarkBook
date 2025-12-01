@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 export default function AccountInfo(){
-    const navigate = useNavigate(); // Fix: Call useNavigate() as a function and move inside component
+    const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const userId = localStorage.getItem("currentUserId");
@@ -10,7 +12,19 @@ export default function AccountInfo(){
             navigate("/Login");
             return;
         }
-    }, [navigate]); // Fix: Add dependency array
+
+        // Get the user accounts array and find the current user
+        const userAccounts = JSON.parse(localStorage.getItem("userAccounts") || "[]");
+        const user = userAccounts.find(account => account.userId === parseInt(userId));
+        
+        if (user) {
+            setCurrentUser(user);
+        }
+    }, [navigate]);
+
+    function togglePassword(){
+        setShowPassword(!showPassword)
+    }
 
     function goBack(){
         navigate("/Account")
@@ -39,6 +53,39 @@ export default function AccountInfo(){
                 
                 <div className="flex justify-center pt-8">
                     <h1 className="text-white text-3xl font-bold font-mono">Account Info</h1>
+                </div>
+
+                <div className="flex flex-col items-center mt-16 gap-4">
+                    {currentUser ? (
+                        <>
+                            
+                                <h2 className="text-black text-xl font-bold">Account Email:</h2>
+                                <p className="text-gray-700">{currentUser.userEmail}</p>
+                           
+                           
+                                <h2 className="text-black text-xl font-bold">User ID:</h2>
+                                <p className="text-gray-700">{currentUser.userId}</p>
+
+                                <h2 className="text-black text-xl font-bold">Account Password:</h2>
+
+                                {showPassword ? (
+                                <p className="text-gray-700">{currentUser.userPassword}</p>
+                                ) : (
+                                     <p className="text-gray-700">*******</p>
+                                )}
+
+                                {showPassword ? 
+                                (
+                                    <button onClick={togglePassword} className="bg-white border border-black">Hide Password</button>
+                                ) : (
+                                <button onClick={togglePassword} className="bg-white border border-black">Show Password</button>
+                                )}
+
+                
+                        </>
+                    ) : (
+                        <p className="text-white">Loading user information...</p>
+                    )}
                 </div>
 
             </div>
