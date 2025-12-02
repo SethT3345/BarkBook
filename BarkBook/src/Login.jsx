@@ -53,7 +53,10 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             currentTheme === "Shih Tzu" ? "bg-purple-900 min-h-screen flex items-center justify-center" :
             "bg-stone-800 min-h-screen flex items-center justify-center"
         }>
+            
             <div className="w-96 h-auto bg-white bg-opacity-90 flex flex-col items-center justify-center p-8 rounded-lg shadow-lg">
+                <div className='w-50 h-50 bg-cover bg-center bg-no-repeat mb-5' style={{ backgroundImage: "url('/BarkBookLogo(1).png')" }}>
+                </div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
                 
                 <form className="w-full max-w-sm" onSubmit={HandleLogin}>
