@@ -60,7 +60,7 @@ export default function AboutUs(){
                 <div className="flex flex-col items-center gap-4 mt-8">
                     <div 
                         className="w-70 h-80 bg-cover bg-center border-2 border-black"
-                        style={{ backgroundImage: "url('/Bark Zucc.jpg')" }}
+                        style={{ backgroundImage: "url('/Bark Zucc.png')" }}
                     ></div>
                     
                     <h1 className="text-black text-xl font-bold text-center">Owner/Founder: Bark Zuckerberg</h1>

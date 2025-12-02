@@ -55,9 +55,17 @@ export default function Signup(){
         }
     }
     
+const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
+
     return(
        <>
-        <div className="bg-amber-500 min-h-screen flex items-center justify-center">
+        <div className={
+            currentTheme === "German Shepard" ? "bg-stone-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Husky" ? "bg-blue-200 min-h-screen flex items-center justify-center" :
+            currentTheme === "Irish Setter" ? "bg-green-800 min-h-screen flex items-center justify-center" :
+            currentTheme === "Shih Tzu" ? "bg-purple-900 min-h-screen flex items-center justify-center" :
+            "bg-stone-800 min-h-screen flex items-center justify-center"
+        }>
             <div className="w-96 h-auto bg-white bg-opacity-90 flex flex-col items-center justify-center p-8 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6">Join Now!</h2>
                 
@@ -67,8 +75,15 @@ export default function Signup(){
                             Email
                         </label>
                         <input 
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
-                            id="email"
+                            
+className={
+                        currentTheme === "German Shepard" ? "focus:ring-stone-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Husky" ? "focus:ring-blue-200 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Irish Setter" ? "focus:ring-green-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Shih Tzu" ? "focus:ring-purple-900 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        "focus:ring-stone-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+        }
+
                             type="email"
                             placeholder="Enter your email"
                         />
@@ -79,7 +94,15 @@ export default function Signup(){
                             Password
                         </label>
                         <input 
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            
+className={
+                        currentTheme === "German Shepard" ? "focus:ring-stone-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Husky" ? "focus:ring-blue-200 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Irish Setter" ? "focus:ring-green-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        currentTheme === "Shih Tzu" ? "focus:ring-purple-900 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2" :
+                        "focus:ring-stone-800 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+        }
+
                             id="password"
                             type="password"
                             placeholder="Enter your password"
@@ -87,7 +110,15 @@ export default function Signup(){
                     </div>
                     
                     <button 
-                        className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+                        
+className={
+                        currentTheme === "German Shepard" ? "bg-stone-800 w-full text-white font-bold py-2 px-4 rounded-md transition duration-300" :
+                        currentTheme === "Husky" ? "bg-blue-200 hover:bg-blue-300 w-full text-gray-800 font-bold py-2 px-4 rounded-md transition duration-300" :
+                        currentTheme === "Irish Setter" ? "bg-green-800 w-full text-white font-bold py-2 px-4 rounded-md transition duration-300" :
+                        currentTheme === "Shih Tzu" ? "bg-purple-900 w-full text-white font-bold py-2 px-4 rounded-md transition duration-300" :
+                        "bg-stone-800 w-full text-gray-800 font-bold py-2 px-4 rounded-md transition duration-300"
+        }
+
                         type="submit"
                     >
                         Sign Up
@@ -97,7 +128,15 @@ export default function Signup(){
                         <span className="text-gray-600">Already have an account? </span>
                         <button 
                             onClick={() => navigate("/Login")}
-                            className="text-amber-600 hover:text-amber-700 font-bold underline"
+                            
+className={
+                        currentTheme === "German Shepard" ? "text-stone-800 font-bold underline" :
+                        currentTheme === "Husky" ? "text-blue-200 font-bold underline" :
+                        currentTheme === "Irish Setter" ? "text-green-800 font-bold underline" :
+                        currentTheme === "Shih Tzu" ? "text-purple-900 font-bold underline" :
+                        "text-stone-800 font-bold underline"
+        }
+
                             type="button"
                         >
                             Log in here!

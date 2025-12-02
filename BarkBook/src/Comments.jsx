@@ -91,9 +91,9 @@ export default function Comments(){
                 currentTheme === "Shih Tzu" ? "bg-purple-300 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
                 "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black"
             }>     
-             <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+             <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border-2 border-black overflow-hidden flex items-center justify-center">
                 <img 
-                    src="/golden-retriever-tongue-out.jpg" 
+                    src="/DogPFP.png" 
                     alt="Profile" 
                     className="w-full h-full object-cover"
                 />
