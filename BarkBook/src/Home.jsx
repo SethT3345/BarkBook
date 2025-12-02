@@ -21,6 +21,9 @@ const [pDropDown, setPDropDown] = useState(false);
 
   
   useEffect(() => {
+
+
+    
     const userId = localStorage.getItem("currentUserId");
     if (!userId) {
       
@@ -28,7 +31,27 @@ const [pDropDown, setPDropDown] = useState(false);
       return;
     }
     setCurrentUserId(userId);
+
+    
   }, []);
+
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowRight") {
+      const userId = localStorage.getItem("currentUserId");
+      if (userId) {
+        fetchDog();
+      }
+    }
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+
+  return () => {
+    window.removeEventListener("keydown", handleKeyDown);
+  };
+}, [currentUserId]);
+
 
   
   const getUserKey = (key) => `${key}_user_${currentUserId}`;
@@ -174,7 +197,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                 currentTheme === "Shih Tzu" ? "bg-purple-300 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black" :
                 "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black"
             }>    
-            <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+            <div onClick={togglePDropDown} className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border-2 border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
                     alt="Profile" 
@@ -194,7 +217,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                         )}
 
             <div className="flex justify-center pt-8">
-                <h1 className="text-black text-3xl font-bold font-mono">BarkBook</h1>
+                <h1 className="font text-black text-3xl font-bold">BarkBook</h1>
             </div>
             <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                 <svg 
@@ -236,22 +259,22 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             </div>
 
             <div className="flex justify-center mt-16">
-                <div 
-                    className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
-                    style={{
-                        backgroundImage: dogUrl ? `url(${dogUrl})` : 'none'
-                    }}
-                >
-                
-                </div>
-            </div>
+    <div 
+        className="w-full rounded-3xl border-4 border-black aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
+        style={{
+            backgroundImage: dogUrl ? `url(${dogUrl})` : 'none'
+        }}
+    >
+    
+    </div>
+</div>
 
             {/* Buttons section */}
             <div className="flex justify-center items-center mt-4 gap-8">
                 {/* Comment Button */}
                 <button 
                     onClick={toggleComment} 
-                    className={`flex items-center justify-center w-12 h-12 rounded-full border border-black hover:bg-gray-100 transition-colors ${
+                    className={`flex items-center justify-center w-12 h-12 rounded-full border-2 border-black hover:bg-gray-100 transition-colors ${
                         wtaComment ? 'bg-blue-500 text-white' : 'bg-white text-black'
                     }`}
                 >
@@ -263,7 +286,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                 {/* Like Button */}
                 <button 
                   onClick={addLike}
-                  className={`flex items-center justify-center w-12 h-12 rounded-full border border-black ${
+                  className={`flex items-center justify-center w-12 h-12 rounded-full border-2 border-black ${
                     Liked ? 'bg-red-500 text-white' : 'bg-white text-black'
                   }`}
                 >
@@ -276,7 +299,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                 <button 
                     onClick={fetchDog}
                     disabled={loading}
-                    className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-black hover:bg-gray-100 transition-colors disabled:opacity-50"
+                    className="flex items-center justify-center w-12 h-12 bg-white rounded-full border-2 border-black hover:bg-gray-100 transition-colors disabled:opacity-50"
                 >
                     <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

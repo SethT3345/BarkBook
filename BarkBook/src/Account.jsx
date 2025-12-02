@@ -22,6 +22,10 @@ function goToHome(){
     navigate("/Home");
 }
 
+function goToAbout(){
+    navigate("/AboutUs")
+}
+
 function goToThemes(){
     navigate("/Themes")
 }
@@ -47,7 +51,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                 "bg-amber-500 min-h-screen w-[50vw] min-w-96 relative shadow-2xl border-l border-r border-black"
             }>
 
-            <div className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border border-black overflow-hidden flex items-center justify-center">
+            <div className="absolute top-4 right-4 w-15 h-15 bg-white rounded-full border-2 border-black overflow-hidden flex items-center justify-center">
                 <img 
                     src="/golden-retriever-tongue-out.jpg" 
                     alt="Profile" 
@@ -56,7 +60,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             </div>
 
             <div className="flex justify-center pt-8">
-                <h1 className="text-black text-3xl font-bold font-mono">Account & Settings</h1>
+                <h1 className="font text-black text-3xl font-bold">Account & Settings</h1>
             </div>
             
             <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
@@ -93,8 +97,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             <div className="flex flex-col items-center justify-center mt-50 gap-8 pb-8">
                 <h2 onClick={goToInfo} className="text-xl font-bold text-center text-black underline">Account Information</h2>
                 <h2 onClick={goToThemes} className="text-xl font-bold text-center text-black underline">Themes</h2>
-                <h2 className="text-xl font-bold text-center text-black underline">Time Limit</h2>
-                <h2 className="text-xl font-bold text-center text-black underline">About Us</h2>
+                <h2 onClick={goToAbout} className="text-xl font-bold text-center text-black underline">About Us</h2>
             </div>
 
               

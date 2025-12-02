@@ -8,6 +8,7 @@ import Comments from './Comments'
 import Account from './Account'
 import AccountInfo from './AccountInfo' 
 import Themes from './Themes'
+import AboutUs from './AboutUs'
 
 
 function App(){
@@ -23,6 +24,7 @@ function App(){
         <Route path="/Account" element={<Account />} />
         <Route path="/AccountInfo" element={<AccountInfo />} />
         <Route path="/Themes" element={<Themes />} />
+        <Route path='AboutUs' element={<AboutUs />} />
       </Routes>
   )
 }

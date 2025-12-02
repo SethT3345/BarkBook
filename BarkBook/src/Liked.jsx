@@ -107,7 +107,7 @@ export default function Liked(){
 
 
                 <div className="flex justify-center pt-8">
-                    <h1 className="text-black text-3xl font-bold font-mono">Liked Posts</h1>
+                    <h1 className="font text-black text-3xl font-bold">Liked Posts</h1>
                 </div>
                 <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                     <svg 
@@ -155,7 +155,7 @@ export default function Liked(){
                         likedPosts.map((imageUrl, index) => (
                             <div key={index} className="flex flex-col items-center">
                                 <div 
-                                    className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
+                                    className="w-full aspect-square border-2 border-black rounded-3xl bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
                                     style={{
                                         backgroundImage: `url(${imageUrl})`
                                     }}

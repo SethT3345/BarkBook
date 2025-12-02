@@ -65,7 +65,7 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
                 </div>
                 
                 <div className="flex justify-center pt-8">
-                    <h1 className="text-black text-3xl font-bold font-mono">Account Info</h1>
+                    <h1 className="font text-black text-3xl font-bold">Account Info</h1>
                 </div>
 
                 <div className="flex flex-col items-center mt-16 gap-4">
@@ -89,9 +89,9 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
 
                                 {showPassword ? 
                                 (
-                                    <button onClick={togglePassword} className="bg-white border border-black">Hide Password</button>
+                                    <button onClick={togglePassword} className="bg-white border w-36 rounded-xl h-8 border-black">Hide Password</button>
                                 ) : (
-                                <button onClick={togglePassword} className="bg-white border border-black">Show Password</button>
+                                <button onClick={togglePassword} className="bg-white border w-36 rounded-xl h-8 border-black">Show Password</button>
                                 )}
 
                 

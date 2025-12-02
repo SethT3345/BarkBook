@@ -112,7 +112,7 @@ export default function Comments(){
             
 
             <div className="flex justify-center pt-8">
-                <h1 className="text-black text-xl font-bold font-mono">Commented Posts</h1>
+                <h1 className="font text-black text-3xl font-bold">Commented Posts</h1>
             </div>
             <div className="absolute top-4 left-4 cursor-pointer" onClick={toggleDropDown}>
                 <svg 
@@ -160,7 +160,7 @@ export default function Comments(){
                     allComments.map((comment, index) => (
                         <div key={index} className="flex flex-col items-center">
                             <div 
-                                className="w-full aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
+                                className="w-full border-2 border-black rounded-3xl aspect-square bg-black max-w-[521px] min-w-96 max-h-[521px] bg-cover bg-center"
                                 style={{
                                     backgroundImage: `url(${comment.dogUrl})`
                                 }}
