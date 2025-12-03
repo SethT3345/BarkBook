@@ -52,7 +52,7 @@ export default function AboutUs(){
                 </div>
                 
                 <div className="flex justify-center pt-8">
-                    <h1 className="text-black text-3xl font-bold font-mono">About Us</h1>
+                    <h1 className="font text-black text-3xl font-bold">About Us</h1>
                 </div>
 
                 <br></br><br></br>

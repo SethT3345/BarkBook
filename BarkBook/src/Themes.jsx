@@ -79,7 +79,7 @@ export default function Themes(){
                 </div>
                 
                 <div className="flex justify-center pt-8">
-                    <h1 className="text-black text-3xl font-bold font-mono">Themes</h1>
+                    <h1 className="font text-black text-3xl font-bold">Themes</h1>
                 </div>
 
                 <div className="flex flex-col items-center justify-center mt-16">

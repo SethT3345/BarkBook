@@ -145,6 +145,8 @@ function logOut(){
 
   function addLike(){
     if (!currentUserId) return;
+
+    const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
     
     if(!Liked){
         let likedPosts = JSON.parse(localStorage.getItem(getUserKey("LikedPosts")) || "[]");
@@ -320,7 +322,11 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             value={userComment}
             onChange={(e) => setUserComment(e.target.value)}
             placeholder="Comment Here..." 
-            className="w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none focus:border-amber-600"
+            className={currentTheme === "German Shepard" ? "focus:border-stone-800 w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none" :
+            currentTheme === "Husky" ? "focus:border-blue-200 w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none" :
+            currentTheme === "Irish Setter" ? "focus:border-green-800 mb-4 w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none" :
+            currentTheme === "Shih Tzu" ? "focus-border-purple-900 mb-4 w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none" :
+            "focus:border-stone-800 mb-4 w-full px-4 bg-white py-3 border-2 border-black rounded-xl text-black placeholder-gray-500 focus:outline-none"}
         />
     </form>
     <button 
@@ -328,7 +334,12 @@ const currentTheme = localStorage.getItem("selectedTheme") || "German Shepard";
             addComment(userComment);
             setUserComment("");
         }}
-        className="mb-4 bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3"
+
+        className={currentTheme === "German Shepard" ? "bg-stone-800 mb-4 hover:bg-stone-900 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3" :
+            currentTheme === "Husky" ? "bg-blue-200 mb-4 hover:bg-blue-300 text-gray-800 font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3" :
+            currentTheme === "Irish Setter" ? "bg-green-800 mb-4 hover:bg-green-900 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3" :
+            currentTheme === "Shih Tzu" ? "bg-purple-900 mb-4 hover:bg-purple-800 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3" :
+            "bg-stone-800 mb-4 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full border border-black transition-colors mt-3"}
     >
         Submit Comment
     </button>
